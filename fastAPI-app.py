@@ -7,6 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from io import BytesIO
 from typing import Optional
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 # Initialize FastAPI app
 app = FastAPI()
 
