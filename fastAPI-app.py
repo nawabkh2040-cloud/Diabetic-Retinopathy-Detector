@@ -100,5 +100,5 @@ async def predict(file: UploadFile = File(...), api_key: str = Depends(get_api_k
 if __name__ == '__main__':
     import uvicorn
     # Get the PORT from the environment variable or default to 8000
-    port = int(os.getenv("PORT", 8000))
+    port = int(os.getenv("PORT", 80))
     uvicorn.run(app, host="0.0.0.0", port=port)
