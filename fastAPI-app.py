@@ -3,11 +3,21 @@ import numpy as np
 import cv2
 import tensorflow as tf
 from fastapi import FastAPI, File, UploadFile, HTTPException, Header, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from io import BytesIO
 from typing import Optional
 
 # Initialize FastAPI app
 app = FastAPI()
+
+# Allow CORS from any origin
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow any origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow any HTTP method (GET, POST, etc.)
+    allow_headers=["*"],  # Allow any headers
+)
 
 # Load the pre-trained model using tf.keras
 model = None
@@ -89,4 +99,6 @@ async def predict(file: UploadFile = File(...), api_key: str = Depends(get_api_k
 # Run the FastAPI app using Uvicorn
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    # Get the PORT from the environment variable or default to 8000
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
